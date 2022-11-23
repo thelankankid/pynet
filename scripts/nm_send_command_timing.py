@@ -27,4 +27,6 @@ commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_comm
 commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_command=False)
 net_connect.disconnect()
 
+print()
 print(commands)
+print()
