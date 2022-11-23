@@ -14,12 +14,18 @@ device = {
 
 net_connect = ConnectHandler(**device)
 
-output = net_connect.send_command(
-    "ping 8.8.8.8"
-)
-print(output)
-#output = net_connect.send_command_timing(
+commands = net_connect.send_command_timing(
     "ping", strip_prompt=False, strip_command=False
 )
+commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_command=False)
+commands += net_connect.send_command_timing(
+    "8.8.8.8", strip_prompt=False, strip_command=False
+)
+commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_command=False)
+commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_command=False)
+commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_command=False)
+commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_command=False)
+commands += net_connect.send_command_timing("\n", strip_prompt=False, strip_command=False)
+net_connect.disconnect()
 
-#output += net_connect.send_command_timing("\n",
+print(commands)
