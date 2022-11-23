@@ -2,7 +2,6 @@ import os
 from getpass import getpass
 from netmiko import ConnectHandler
 
-
 password = os.getenv("PYNET_PASSWORD") if os.getenv("PYNET_PASSWORD") else getpass()
 
 device = {
