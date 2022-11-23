@@ -14,7 +14,11 @@ device = {
 
 net_connect = ConnectHandler(**device)
 
-output = net_connect.send_command_timing(
+output = net_connect.send_command(
+    "ping 8.8.8.8"
+)
+print(output)
+#output = net_connect.send_command_timing(
     "ping", strip_prompt=False, strip_command=False
 )
 
