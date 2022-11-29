@@ -28,7 +28,7 @@ print()
 
 # use local delay factor
 start_time = datetime.now()
-output = net_connect.send_command(command, delay_factor=8)
+output = net_connect.send_command(command, delay_factor=8, fast_cli=False)
 net_connect.disconnect()
 end_time = datetime.now()
 print("#" * 80)
