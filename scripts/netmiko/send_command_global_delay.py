@@ -1,5 +1,5 @@
-from datetime import datetime
 import os
+from datetime import datetime
 from getpass import getpass
 from netmiko import ConnectHandler
 
@@ -26,9 +26,10 @@ print("#" * 80)
 print("\n\nExecution Time: {}".format(end_time - start_time))
 print()
 
+command = "show lldp neighbors details"
 # use local delay factor
 start_time = datetime.now()
-output = net_connect.send_command(command, delay_factor=8, fast_cli=False)
+output = net_connect.send_command(command, delay_factor=8)
 net_connect.disconnect()
 end_time = datetime.now()
 print("#" * 80)
