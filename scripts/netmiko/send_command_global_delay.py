@@ -5,7 +5,7 @@ from netmiko import ConnectHandler
 password = os.getenv("PYNET_PASSWORD") if os.getenv("PYNET_PASSWORD") else getpass()
 
 device = {
-    "host": "nxo2.lasthop.io",
+    "host": "nxos2.lasthop.io",
     "device_type": "cisco_nxos",
     "username": "pyclass",
     "password": password,
