@@ -26,10 +26,9 @@ print("#" * 80)
 print("\n\nExecution Time: {}".format(end_time - start_time))
 print()
 
-command = "show lldp neighbors details"
-# use local delay factor
+cmd = "show lldp neighbors detail"
 start_time = datetime.now()
-output = net_connect.send_command(command, delay_factor=8)
+output = net_connect.send_command(cmd, delay_factor=8)
 net_connect.disconnect()
 end_time = datetime.now()
 print("#" * 80)
