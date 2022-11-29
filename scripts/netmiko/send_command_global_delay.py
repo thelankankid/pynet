@@ -1,4 +1,4 @@
-import datetime
+from import import datetime
 import os
 from getpass import getpass
 from netmiko import ConnectHandler
