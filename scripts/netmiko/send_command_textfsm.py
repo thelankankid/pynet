@@ -29,7 +29,7 @@ for cmd in cmds:
 
     if cmd == "show lldp neighbors":
         print("LLDP Data Structure Type: {}".format(type(output)))
-        print("HPE Switch Connection port: {}".format(output[0][neighbor_interface"]))
+        print("HPE Switch Connection port: {}".format(output[0]["neighbor_interface"]))
 
 print()
 net_connect.disconnect()
