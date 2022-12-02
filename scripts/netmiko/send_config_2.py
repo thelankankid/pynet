@@ -21,14 +21,14 @@ if __name__ == "__main__":
         "host":"nxos1.lasthop.io",
         "username": "pyclass",
         "password": password,
-        "device_type": "cisco_ios",
+        "device_type": "cisco_nxos",
         "fast_cli": True
     }
     nxos2 = {
         "host":"nxos2.lasthop.io",
         "username": "pyclass",
         "password": password,
-        "device_type": "cisco_ios",
+        "device_type": "cisco_nxos",
         "fast_cli": True
     }
 

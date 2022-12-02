@@ -1,9 +1,8 @@
 import os
+import time
 from netmiko import ConnectHandler
 from getpass import getpass
-from pprint import pprint
 from datetime import datetime
-
 
 def display_output(output):
     print()
@@ -13,27 +12,38 @@ def display_output(output):
     print("#" * 80)
     print()
 
-if __name__ == "__main__":
+password = os.getenv("PYNET_PASSWORD") if os.getenv("PYNET_PASSWORD") else getpass()
+device = {
+    "host":"cisco4.lasthop.io",
+    "username": "pyclass",
+    "password": password,
+    "secret": password,
+    "device_type": "cisco_ios",
+    #"fast_cli": True,
+    "session_log": "script_output.txt"
+}
 
-    password = os.getenv("PYNET_PASSWORD") if os.getenv("PYNET_PASSWORD") else getpass()
-    nxos1 = {
-        "host":"nxos1.lasthop.io",
-        "username": "pyclass",
-        "password": password,
-        "device_type": "cisco_ios",
-        "fast_cli": True
-    }
-    nxos2 = {
-        "host":"nxos2.lasthop.io",
-        "username": "pyclass",
-        "password": password,
-        "device_type": "cisco_ios",
-        "fast_cli": True
-    }
+net_connect = ConnectHandler(**device)
+print("\nCurrent Prompt: ")
+print(net_connect.find_prompt())
 
-    for device in (nxos1, nxos2):
-        net_connect = ConnectHandler(**device)
-        output = net_connect.send_config_from_file("vlans.txt")
-        output += net_connect.save_config()
-        display_output(output)
-        net_connect.disconnect()
+print("\nEnter Config Mode, Current Prompt: ")
+net_connect.config_mode()
+print(net_connect.find_prompt())
+
+print("\nExit Config Mode, Current Prompt: ")
+net_connect.exit_config_mode()
+print(net_connect.find_prompt())
+
+print("\nExit privileged exec (disable), Current Prompt: ")
+net_connect.write_channel("disable\n")
+time.sleep(2)
+output = net_connect.read_channel()
+print(output)
+
+print("\nRe-enter enable mode, Current Prompt: ")
+net_connect.enable()
+print(net_connect.find_prompt())
+
+net_connect.disconnect()
+print()
