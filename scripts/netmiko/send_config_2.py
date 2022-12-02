@@ -4,8 +4,6 @@ from getpass import getpass
 from pprint import pprint
 from datetime import datetime
 
-
-
 #start_time = datetime.now()
 
 def display_output(output):
