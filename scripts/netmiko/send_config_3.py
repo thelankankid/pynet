@@ -4,6 +4,7 @@ from getpass import getpass
 from pprint import pprint
 from datetime import datetime
 
+
 def display_output(output):
     print()
     print("#" * 80)
