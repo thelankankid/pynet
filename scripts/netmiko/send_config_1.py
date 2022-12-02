@@ -13,7 +13,7 @@ device = {
     "username": "pyclass",
     "password": password,
     "device_type": "cisco_ios",
-    #"fast_cli": True
+    "fast_cli": True
 }
 
 net_connect = ConnectHandler(**device)

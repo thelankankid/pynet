@@ -8,7 +8,7 @@ from datetime import datetime
 
 #start_time = datetime.now()
 
-def display_output(output)
+def display_output(output):
     print()
     print("#" * 80)
     print("CFG Change: ")
