@@ -37,5 +37,6 @@ if __name__ == "__main__":
     for device in (nxos1, nxos2):
         net_connect = ConnectHandler(**device)
         output = net_connect.send_config_from_file("vlans.txt")
+        output += net_connect.save_config()
         display_output(output)
         net_connect.disconnect()
