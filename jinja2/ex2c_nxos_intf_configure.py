@@ -7,6 +7,7 @@ from jinja2.environment import Environment
 from netmiko import ConnectHandler
 from my_devices import nxos1, nxos2
 
+
 if __name__ == "__main__":
     env = Environment(undefined=StrictUndefined)
     env.loader = FileSystemLoader("./templates/")
@@ -21,6 +22,7 @@ if __name__ == "__main__":
         "ipv4_address": "10.1.100.1",
         "ipv4_netmask": "24",
     }
+
     nxos2_vars = {
         "device_name": "nxos2",
         "local_as": 22,
@@ -29,34 +31,35 @@ if __name__ == "__main__":
         "ipv4_netmask": "24",
     }
 
-nxos1_vars["peer_ip"] = nxos2_vars["ipv4_address"]
-nxos2_vars["peer_ip"] = nxos1_vars["ipv4_address"]
+    nxos1_vars["peer_ip"] = nxos2_vars["ipv4_address"]
+    nxos2_vars["peer_ip"] = nxos1_vars["ipv4_address"]
 
-#  Add Jinja2 vars to be included in the Netmiko device dictionary
-nxos1["j2_vars"] = nxos1_vars
-nxos2["j2_vars"] = nxos2_vars
+    # Add Jinja2 vars to be included in the Netmiko device dictionary
+    nxos1["j2_vars"] = nxos1_vars
+    nxos2["j2_vars"] = nxos2_vars
 
-print()
-for device in (nxos1, nxos2):
-    # create a copy as the dictionary will be modified
-    tmp_device = device.copy()
-    j2_vars = tmp_device.pop("j2_vars")
-    template = env.get_template(template_file)
-    cfg = template.render(**j2_vars)
-    device_name = device["j2_vars"]["device_name"]
-    print(f" {device_name} ".center(80, "#"))
-    print(f"\n>>> Template output {device_name}")
-    print(cfg)
-    # Stripping out whitespace will make CLI cfg-output display cleaner
-    cfg_lines = [cfg.strip() for cfg in cfg.splitlines()]
+    print()
+    for device in (nxos1, nxos2):
+        # Create a copy as I am going to modify the dictionary
+        tmp_device = device.copy()
+        j2_vars = tmp_device.pop("j2_vars")
+        template = env.get_template(template_file)
+        cfg = template.render(**j2_vars)
+        device_name = device["j2_vars"]["device_name"]
+        print(f" {device_name} ".center(80, "#"))
+        print(f"\n>>> Template output {device_name}")
+        print(cfg)
+        # Stripping out whitespace will make CLI cfg-output display cleaner
+        cfg_lines = [cfg.strip() for cfg in cfg.splitlines()]
 
-    net_connect = ConnectHandler(**tmp_device)
-    # Store the SSH connection for later (so I don't have to reconnect)
-    device["ssh_conn"] = net_connect
-    print(f">>> Configuring {device_name}")
-    output = net_connect.send_config_set(cfg_lines)
-    print(output)
-    print("\n\n")
+        # Establish Netmiko Connection
+        net_connect = ConnectHandler(**tmp_device)
+        # Store the SSH connection for later (so I don't have to reconnect)
+        device["ssh_conn"] = net_connect
+        print(f">>> Configuring {device_name}")
+        output = net_connect.send_config_set(cfg_lines)
+        print(output)
+        print("\n\n")
 
     # Give BGP enough time to reach the established state
     sleep_time = 15
